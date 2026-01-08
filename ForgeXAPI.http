@@ -1,0 +1,6 @@
+@ForgeXAPI_HostAddress = http://localhost:5056
+
+GET {{ForgeXAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
