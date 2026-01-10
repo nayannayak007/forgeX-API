@@ -32,6 +32,7 @@ public class AssessmentController : ControllerBase
                 a.Status,
                 a.PlayerId
             })
+            .OrderByDescending(a => a.TakenOn)
             .ToListAsync();
 
         return Ok(data);
