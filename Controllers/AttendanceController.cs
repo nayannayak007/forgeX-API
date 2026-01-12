@@ -42,7 +42,12 @@ namespace ForgeXAPI.Controllers
             var classes = await _context.UserSchools
                 .Where(us => us.UserId == userId)
                 .Include(us => us.School)
-                .Select(us => us.School)
+                .Select(us => new
+                {
+                    us.School.Id,
+                    us.School.ClassName,
+                    StudentCount = _context.Players.Count(p => p.ClassId == us.School.Id)
+                })
                 .AsNoTracking()
                 .OrderBy(c => c.ClassName)
                 .ToListAsync();
