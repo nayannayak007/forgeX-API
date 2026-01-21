@@ -17,11 +17,19 @@ public class AssessmentController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int? classId)
     {
-        var data = await _context.Assessments
+        var query = _context.Assessments
             .Include(a => a.Player)
             .Include(a => a.Class)
+            .AsQueryable();
+
+        if (classId.HasValue)
+        {
+            query = query.Where(a => a.ClassId == classId.Value);
+        }
+
+        var data = await query
             .Select(a => new
             {
                 a.Id,
